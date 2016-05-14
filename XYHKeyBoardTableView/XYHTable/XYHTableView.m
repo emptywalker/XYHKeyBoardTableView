@@ -34,8 +34,6 @@ static NSString *cellID = @"cellID";
         self.rowHeight = 100.f;
         self.sectionFooterHeight = 100.f;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-        UIGestureRecognizer *gesture = [[UIGestureRecognizer alloc]initWithTarget:self action:@selector(missKeyBoard)];
-        [self addGestureRecognizer:gesture];
     }
     return self;
 }
@@ -104,9 +102,7 @@ static NSString *cellID = @"cellID";
             self.contentOffset = CGPointMake(0, self.currentTextViewRect.origin.y + self.currentTextViewRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height));
         }];
     }
-    
 //    NSLog(@"keyRect - %@ \n TVRect - %@ \n contentOffset - %@  ",NSStringFromCGRect(rect), NSStringFromCGRect(self.currentTextViewRect), NSStringFromCGPoint(self.contentOffset));
-
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -114,9 +110,6 @@ static NSString *cellID = @"cellID";
 
 }
 
-- (void)missKeyBoard{
-    [self endEditing:YES];
-}
 
 
 @end
