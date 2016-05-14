@@ -30,8 +30,13 @@
     
     [self.tableView reloadDataWithArray:self.dataArray];
     
+    
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+#pragma mark event Response
+
 
 #pragma mark --setter/getter
 

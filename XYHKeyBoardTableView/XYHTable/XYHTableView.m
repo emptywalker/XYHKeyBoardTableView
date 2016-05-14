@@ -34,6 +34,8 @@ static NSString *cellID = @"cellID";
         self.rowHeight = 100.f;
         self.sectionFooterHeight = 100.f;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+        UIGestureRecognizer *gesture = [[UIGestureRecognizer alloc]initWithTarget:self action:@selector(missKeyBoard)];
+        [self addGestureRecognizer:gesture];
     }
     return self;
 }
@@ -93,20 +95,28 @@ static NSString *cellID = @"cellID";
     CGRect rect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     //取出键盘弹出需要花费的时间
     double duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
     //获取最佳位置距离屏幕上方的距离
     /**
      *这个距离是有相对偏移位置 - 屏幕上方空余高度的偏移量
      */
-    if (rect.origin.y < (self.currentTextViewRect.origin.y + self.currentTextViewRect.size.height)) {//键盘的高度 高于textView的高度 需要滚动
+    if ((self.currentTextViewRect.origin.y + self.currentTextViewRect.size.height) >  ([UIScreen mainScreen].bounds.size.height - rect.size.height)) {//键盘的高度 高于textView的高度 需要滚动
         [UIView animateWithDuration:duration animations:^{
             self.contentOffset = CGPointMake(0, self.currentTextViewRect.origin.y + self.currentTextViewRect.size.height - ([UIScreen mainScreen].bounds.size.height - rect.size.height));
         }];
     }
+    
 //    NSLog(@"keyRect - %@ \n TVRect - %@ \n contentOffset - %@  ",NSStringFromCGRect(rect), NSStringFromCGRect(self.currentTextViewRect), NSStringFromCGPoint(self.contentOffset));
 
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self endEditing:YES];
+
+}
+
+- (void)missKeyBoard{
+    [self endEditing:YES];
+}
 
 
 @end
